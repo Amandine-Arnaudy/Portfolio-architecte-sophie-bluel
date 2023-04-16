@@ -140,6 +140,39 @@ a:hover {
 	text-align: center;
 	margin-bottom: 50px;
 }
+/* Button */
+
+.categories {
+	display: flex;
+	justify-content: center;
+	margin: 51px 0px;
+}
+
+.btn {
+	font-family: 'Syne';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 19px;
+	text-align: center;
+	height: 37px;
+	padding: 0 1.6rem;
+
+	color: #1D6154;
+
+	background-color: transparent;
+	border: 1px solid #1D6154;
+	border-radius: 60px;
+	margin: 0px 5px;
+	cursor: pointer;
+}
+
+.categories button:focus {
+	cursor: pointer;
+	background-color: #1D6154;
+	color: white;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
