@@ -59,7 +59,7 @@ async function categoriesButtons() {
 
     if (window.sessionStorage.getItem('token') === null) {
         const categories = await response.json();
-   
+
         const filtersButtons = document.createElement('div');
         filtersButtons.classList.add('categories');
         const categoriesButtons = document.createElement('button');
@@ -92,13 +92,12 @@ async function categoriesButtons() {
 // Filtre à travers les catégories
 function showCategories(event) {
     const works = JSON.parse(localStorage.getItem('works'));
-    if (event.target.className === 'btn all') {
+    if (event.target.nodeName === 'BUTTON' && event.target.className === 'btn all') {
         allWorks();
-    } else {
+    } else if (event.target.nodeName === 'BUTTON' && event.target.dataset.categoryId) {
         const workCategory = works.filter(i => i.categoryId == `${event.target.dataset.categoryId}`);
         generateGallery(workCategory);
     }
-
 }
 
 // Génère les catégories
@@ -116,3 +115,4 @@ function generateGallery(works) {
 
 allWorks();
 categoriesButtons();
+
