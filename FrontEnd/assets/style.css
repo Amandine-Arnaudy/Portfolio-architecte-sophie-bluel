@@ -3,19 +3,87 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -23,47 +91,120 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 	background-color: #FFFEF8;
 }
-ol, ul {
+
+ol,
+ul {
 	list-style: none;
 }
-blockquote, q {
+
+blockquote,
+q {
 	quotes: none;
 }
-blockquote:before, blockquote:after,
-q:before, q:after {
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
 	content: '';
 	content: none;
 }
+
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
 /** end reset css**/
 body {
-	margin:auto;
-	font-family: 'Work Sans' ;
+	margin: auto;
+	font-family: 'Work Sans';
 	font-size: 14px;
 }
+
+/* Top Black */
+
+.publish {
+	background-color: black;
+	height: 59px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 19px;
+	gap: 20px;
+}
+
+.publish a {
+	color: white;
+	text-decoration: none;
+	display: flex;
+	gap: 12px;
+}
+
+.publish button {
+	background: #FFFFFF;
+	border-radius: 60px;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	color: #000000;
+	width: 216px;
+	height: 38px;
+	border: none;
+	cursor: pointer;
+}
+
+/* Login - Logout */
+
+#logout {
+	padding-right: 30px;
+	font-size: 1.2em;
+	text-decoration: none;
+	color: black;
+}
+
+#logout:hover {
+	color: #B1663C;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
 	width: 80%;
 	margin: 50px auto;
 }
+
 section {
 	margin: 50px 0;
 }
 
-h1{
+h1 {
 	display: flex;
 	flex-direction: column;
 	font-family: 'Syne';
@@ -72,27 +213,29 @@ h1{
 	color: #B1663C;
 }
 
-h1 > span {
+h1>span {
 	font-family: 'Work Sans';
-	font-size:10px;
+	font-size: 10px;
 	letter-spacing: 0.1em;
 	margin-top: 4px;
 	text-transform: uppercase;
 }
 
-h2{
+h2 {
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
 	color: #1D6154
 }
+
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
 
 }
-nav li a{
+
+nav li a {
 	padding-right: 30px;
 	font-size: 1.2em;
 	text-decoration: none;
@@ -102,18 +245,22 @@ nav li a{
 nav img {
 	width: 19px;
 }
+
 a:hover {
 	color: #B1663C;
 }
+
 #introduction {
 	display: flex;
 	align-items: center;
 	width: 75%;
 	margin: 139px auto;
 }
+
 #introduction figure {
 	flex: 1
 }
+
 #introduction img {
 	display: block;
 	margin: auto;
@@ -123,6 +270,7 @@ a:hover {
 #introduction article {
 	flex: 1;
 }
+
 #introduction h2 {
 	margin-bottom: 1em;
 }
@@ -132,14 +280,53 @@ a:hover {
 	width: 404px;
 }
 
+#introduction div a {
+	display: flex;
+	gap: 10px;
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color: #000000;
+	text-decoration: none;
+	margin-top: 15px;
+	margin-left: 60px;
+}
+
+#introduction div a:hover {
+	color: #B1663C;
+}
+
 #portfolio {
 	width: 80%;
 	margin: 50px auto;
 }
+
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 50px;
 }
+
+#portfolio a {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	color: #000000;
+	text-decoration: none;
+	margin-left: 30px;
+}
+
+#portfolio a svg {
+	margin-right: 10px ;
+}
+
+#portfolio a:hover {
+	color: #B1663C;
+}
+
 /* Button */
 
 .categories {
@@ -185,20 +372,24 @@ a:hover {
 	width: 100%;
 
 }
+
 #contact {
 	width: 30%;
-margin: auto;
+	margin: auto;
 }
-#contact > * {
+
+#contact>* {
 	text-align: center;
 
 }
-#contact h2{
+
+#contact h2 {
 	margin-bottom: 20px;
 }
+
 #contact form {
 	text-align: left;
-	margin-top:30px;
+	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
@@ -209,23 +400,25 @@ margin: auto;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #contact label {
 	margin: 2em 0 1em 0;
 }
+
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	margin : 2em auto ;
+	margin: 2em auto;
 	width: 180px;
 	text-align: center;
-	border-radius: 60px ;
+	border-radius: 60px;
 }
 
 footer nav ul {
@@ -236,32 +429,30 @@ footer nav ul {
 	height: 60px;
 }
 
-/* Login */ 
-#login {
+/* Login Page */
+
+#log {
 	width: 30%;
 	margin: auto;
 	margin-top: 150px;
 	margin-bottom: 350px;
 }
 
-#login>* {
+#log>* {
 	text-align: center;
 
 }
 
-#login h2 {
+#log h2 {
 	margin-bottom: 20px;
 }
 
-#login form {
+#login {
 	text-align: left;
 	margin-top: 30px;
 	display: flex;
 	flex-direction: column;
 }
-
-/* ErrorMessage */
-
 
 #login input {
 	height: 50px;
@@ -308,4 +499,13 @@ section form a {
 	color: #3D3D3D;
 	margin: 0 auto;
 	text-decoration-line: underline;
+}
+
+/* ErrorMessage */
+
+#errorMessage {
+	color: red;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
 }
