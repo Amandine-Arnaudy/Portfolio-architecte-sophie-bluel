@@ -6,12 +6,10 @@ let works = [];
 
 
 async function allWorks() {
-
     try {
         const response = await fetch(urlApi + 'works', {
             method: 'GET',
             headers: {
-                'Access-Control-Allow-Origin': '*',
                 'accept': 'application/json'
             }
         });
@@ -41,6 +39,17 @@ async function allWorks() {
 
 }
 
+// Lorsque l'utilisateur est connecté 
+async function adminLogin() {
+    if (window.sessionStorage.getItem('token') === null) {
+        categoriesButtons();
+    } else {
+        logout();
+        topBlackMenu();
+        modifyProjets();
+        modifyButton();
+    }
+}
 
 // Catégories
 async function categoriesButtons() {
@@ -57,52 +66,38 @@ async function categoriesButtons() {
     const portfolio = document.querySelector('#portfolio');
     const myProject = document.createElement('h2');
     myProject.textContent = 'Mes Projets';
+    const categories = await response.json();
 
-    if (window.sessionStorage.getItem('token') === null) {
-        const categories = await response.json();
-         
-        // Filtres Catégories
-        const filtersButtons = document.createElement('div');
-        filtersButtons.classList.add('categories');
-        const categoriesButtons = document.createElement('button');
-        categoriesButtons.textContent = 'Tous';
-        categoriesButtons.classList.add('btn', 'all');
-        filtersButtons.appendChild(categoriesButtons);
-        portfolio.prepend(filtersButtons);
-        portfolio.prepend(myProject);
+    // Filtres Catégories
+    const filtersButtons = document.createElement('div');
+    filtersButtons.classList.add('categories');
+    const categoriesButtons = document.createElement('button');
+    categoriesButtons.textContent = 'Tous';
+    categoriesButtons.classList.add('btn', 'all');
+    filtersButtons.appendChild(categoriesButtons);
+    portfolio.prepend(filtersButtons);
+    portfolio.prepend(myProject);
 
-        for (let categorie of categories) {
-            //console.log(categorie);
-            const button = document.createElement('button');
-            button.setAttribute('class', 'btn');
-            button.setAttribute('data-category-id', `${categorie.id}`);
-            button.textContent = `${categorie.name}`;
-            //console.log(button.dataset.categoryId);
-            filtersButtons.appendChild(button);
-        }
-
-        let buttons = document.querySelectorAll('.btn');
-        for (let i = 0; i < buttons.length; i++) {
-            buttons[i].addEventListener('click', showCategories);
-        }
-    } else {
-        logout();
-        topBlackMenu();
-        portfolio.prepend(myProject);
-        const aLink = elementGenerator('a', undefined, ['href=#']);
-        const iElement = elementGenerator('i', undefined, ['class=fa-regular fa-pen-to-square']);
-        const spanElement = elementGenerator('span', 'modifier', []);
-        aLink.appendChild(iElement);
-        aLink.appendChild(spanElement);
-        myProject.appendChild(aLink);
-        modifyButton();
+    for (let categorie of categories) {
+        //console.log(categorie);
+        const button = document.createElement('button');
+        button.setAttribute('class', 'btn');
+        button.setAttribute('data-category-id', `${categorie.id}`);
+        button.textContent = `${categorie.name}`;
+        //console.log(button.dataset.categoryId);
+        filtersButtons.appendChild(button);
     }
-}
 
+    let buttons = document.querySelectorAll('.btn');
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', showCategories);
+    }
+
+}
 
 // Filtre à travers les catégories
 function showCategories(event) {
-    const works = JSON.parse(localStorage.getItem('works'));
+    const works = JSON.parse(localStorage.getItem('works')); // recupère tableau works
     if (event.target.nodeName === 'BUTTON' && event.target.className === 'btn all') {
         allWorks();
     } else if (event.target.nodeName === 'BUTTON' && event.target.dataset.categoryId) {
@@ -121,9 +116,6 @@ function generateGallery(works) {
 		 				<figcaption>${projet.title}</figcaption>`;
     }
 }
-
-allWorks();
-categoriesButtons();
 
 // Id Login - Logout
 function logout() {
@@ -162,6 +154,20 @@ function topBlackMenu() {
     div.appendChild(button);
 }
 
+// 'Mes projets' avec Lien Modifier 
+function modifyProjets() {
+    const portfolio = document.querySelector('#portfolio');
+    const myProject = document.createElement('h2');
+    myProject.textContent = 'Mes Projets';
+    const aLink = elementGenerator('a', undefined, ['href=#modal1']);
+    const iElement = elementGenerator('i', undefined, ['class=fa-regular fa-pen-to-square']);
+    const spanElement = elementGenerator('span', 'modifier', []);
+    aLink.appendChild(iElement);
+    aLink.appendChild(spanElement);
+    portfolio.prepend(myProject);
+    myProject.appendChild(aLink);
+}
+
 // Lien Modifier 
 function modifyButton() {
     const introductionSection = document.querySelector("#introduction figure");
@@ -174,3 +180,9 @@ function modifyButton() {
     divElement.appendChild(aLink);
     introductionSection.appendChild(divElement);
 }
+
+allWorks();
+adminLogin();
+
+// Modale 
+

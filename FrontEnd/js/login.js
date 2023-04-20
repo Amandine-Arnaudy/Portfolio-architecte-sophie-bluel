@@ -3,7 +3,7 @@ const emailInput = document.querySelector('#email');
 const passwordInput = document.querySelector('#password');
 const url = 'http://localhost:5678/api/users/login';
 
-// Ajoute un événement de soumission de formulaire
+
 loginForm.addEventListener('submit', async (event) => {
     // Empêche le formulaire de se soumettre
     event.preventDefault();
@@ -59,7 +59,7 @@ loginForm.addEventListener('submit', async (event) => {
 // Message d'erreur
 function errorMessage() {
     const error = document.createElement('p');
-    error.textContent = 'Les informations de connexion sont incorrectes.';
+    error.textContent = 'Erreur dans l’identifiant ou le mot de passe';
     error.setAttribute('id', 'errorMessage');
     loginForm.appendChild(error);
   }
