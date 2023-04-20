@@ -49,7 +49,7 @@
 		<section id="portfolio">
 			<div class="gallery"></div>
 		</section>
-		
+
 		<section id="contact">
 			<h2>Contact</h2>
 			<p>Vous avez un projet ? Discutons-en !</p>
@@ -63,6 +63,67 @@
 				<input type="submit" value="Envoyer">
 			</form>
 		</section>
+
+		<aside id="modal">
+			<div id="modal_wrapper">
+
+				<!-- modal page 1 -->
+
+				<div id="modal1">
+					<button id="modal_close"><i class="fa-solid fa-xmark"></i></button>
+					<h2 class="modal_title">Galerie photo</h2>
+					<span id="empty-gallery-msg">La galerie est vide, cliquez sur le bouton ci-dessous pour ajouter une
+						photo.</span>
+					<span class="error-msg"></span>
+					<div id="modal_figures"></div>
+					<hr>
+					<button class="submit_button">Ajouter une photo</button>
+					<a id="delete_gallery" href="#">Supprimer la galerie</a>
+				</div>
+
+				<!-- modal page 2 -->
+
+				<div id="modal2">
+					<button id="modal_arrow"><i class="fa-solid fa-arrow-left-long"></i></button>
+					<button id="modal_close"><i class="fa-solid fa-xmark"></i></button>
+					<h2 class="modal_title">Ajout photo</h2>
+
+					<form id="formAddImage">
+
+						<div class="image_container">
+							<i class="fa-solid fa-image"></i>
+
+							<div id="input_image_container">
+
+								<a href="#modal-add-image"><label for="file" class="add-photo-button">+ Ajouter une
+										photo</label></a>
+								<input type="file" id="file" name="photo" onchange="previewImage(event);">
+							</div>
+							<span id="image_restriction">jpg, png : 4mo max</span>
+						</div>
+
+						<div class="title">
+							<label for="input_title">Titre</label>
+							<input type="text" name="title" id="input-title" required>
+						</div>
+
+						<div class="category">
+							<label for="category1">Catégorie</label>
+							<select name="category" id="category" required>
+								<option value="" disabled selected hidden></option>
+								<option value="1">Objets</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hotels & restaurants</option>
+							</select>
+						</div>
+						<hr>
+						<button id="button_validate" class="submit_button2" disabled>Valider</button>
+					</form>
+				</div>
+
+			</div>
+		</aside>
+
 	</main>
 
 	<footer>
