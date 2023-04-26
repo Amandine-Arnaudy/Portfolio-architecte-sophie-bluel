@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="https://kit.fontawesome.com/8e51572be2.js" crossorigin="anonymous"></script>
 	<script src="./js/script.js" defer></script>
+	<script src="./js/modale.js" defer></script>
 </head>
 
 <body>
@@ -64,15 +65,17 @@
 			</form>
 		</section>
 
-		<aside id="modal">
-			<div id="modal_wrapper">
 
-				<!-- modal page 1 -->
 
+
+		<!-- modal page 1 -->
+		<aside id="modal_1">
+			<div id="modal_wrapper_1">
 				<div id="modal1">
 					<button id="modal_close"><i class="fa-solid fa-xmark"></i></button>
 					<h2 class="modal_title">Galerie photo</h2>
-					<span id="empty-gallery-msg">La galerie est vide, cliquez sur le bouton ci-dessous pour ajouter une
+					<span id="empty-gallery-msg">La galerie est vide, cliquez sur le bouton ci-dessous pour ajouter
+						une
 						photo.</span>
 					<span class="error-msg"></span>
 					<div id="modal_figures"></div>
@@ -80,25 +83,30 @@
 					<button class="submit_button">Ajouter une photo</button>
 					<a id="delete_gallery" href="#">Supprimer la galerie</a>
 				</div>
+			</div>
+		</aside>
 
-				<!-- modal page 2 -->
-
+		<!-- modal page 2 -->
+		<aside id="modal_2">
+			<div id="modal_wrapper_2">
 				<div id="modal2">
 					<button id="modal_arrow"><i class="fa-solid fa-arrow-left-long"></i></button>
-					<button id="modal_close"><i class="fa-solid fa-xmark"></i></button>
+					<button id="modal_close2"><i class="fa-solid fa-xmark"></i></button>
 					<h2 class="modal_title">Ajout photo</h2>
 
 					<form id="formAddImage">
-
+						<img id="imagePreview" src="#" alt="Peview image">
 						<div class="image_container">
 							<i class="fa-solid fa-image"></i>
 
 							<div id="input_image_container">
 
-								<a href="#modal-add-image"><label for="file" class="add-photo-button">+ Ajouter une
-										photo</label></a>
-								<input type="file" id="file" name="photo" onchange="previewImage(event);">
-							</div>
+								<a href="#modal-add-image"><label for="file"
+											class="add-photo-button">+ Ajouter une
+											photo</label></a>
+									<input type="file" id="file" name="photo" onchange="previewImage(event);">
+								</div>
+							
 							<span id="image_restriction">jpg, png : 4mo max</span>
 						</div>
 

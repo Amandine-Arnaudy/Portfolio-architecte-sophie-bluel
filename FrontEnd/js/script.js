@@ -184,5 +184,4 @@ function modifyButton() {
 allWorks();
 adminLogin();
 
-// Modale 
 
