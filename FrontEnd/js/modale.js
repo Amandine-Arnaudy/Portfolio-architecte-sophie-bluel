@@ -52,46 +52,48 @@ arrowModal.addEventListener('click', function () {
     modal2.style.display = "none";
 });
 
-// Modale 1
-// Galerie Photo 
-const urlWorks = "http://localhost:5678/api/works";
+// Modale 1 - Supression travaux 
 
-fetch(urlWorks)
-    .then((response) => {
+// URL de l'API qui fournit les projets
+const urlWorks = "http://localhost:5678/api/works";
+const token = sessionStorage.getItem("token");
+
+// Fonction pour afficher les projets dans la modal
+async function displayProjects() {
+    try {
+        const response = await fetch(urlWorks);
         if (!response.ok) {
             if (response.status === 500) {
-                throw new Error(`	
-                Unexpected Error`);
+                throw new Error('Unexpected Error');
             } else if (response.status === 401) {
-                throw new Error(`	
-                Unauthorized`);
+                throw new Error('Unauthorized');
             }
         }
-        return response.json();
-    })
-    .then((works) => {
+        const works = await response.json();
         const figuresContainer = document.querySelector("#modal_figures");
-
-        for (let projets in works) {
-
-            // Figures
+        figuresContainer.innerHTML = ""; // vide le conteneur avant d'afficher les projets
+        if (works.length === 0) {
+            document.querySelector("#empty-gallery-msg").style.display = "block"; // affiche le message "galerie vide"
+            return;
+        } else {
+            document.querySelector("#empty-gallery-msg").style.display = "none";
+        }
+        for (let project of works) {
             const figureModal = document.createElement("figure");
             figureModal.setAttribute("class", "modal_figure");
-            //figureModal.setAttribute("data-id-work-modal", works[projets].id); 
-
-            // Images
             const imageModal = document.createElement("img");
             imageModal.setAttribute("class", "modal_works");
-            imageModal.setAttribute("src", works[projets].imageUrl);
-            imageModal.setAttribute("alt", works[projets].title);
-
-            // Icons 
+            imageModal.setAttribute("src", project.imageUrl);
+            imageModal.setAttribute("alt", project.title);
+            const deleteBtn = document.createElement("div");
+            deleteBtn.classList.add("delete-btn");
             const iconDeleteModal = document.createElement("i");
+            iconDeleteModal.classList.add("fa-solid", "fa-trash-can");
             const iconMoveModal = document.createElement("i");
-            iconDeleteModal.setAttribute("class", "delete-btn fa-solid fa-trash-can");
-            iconMoveModal.setAttribute("class", "move-btn fa-solid fa-arrows-up-down-left-right");
-
-            // marche pas ? 
+            iconMoveModal.setAttribute(
+                "class",
+                "move-btn fa-solid fa-arrows-up-down-left-right"
+            );
             iconMoveModal.style.display = "none";
             figureModal.addEventListener("mouseover", () => {
                 iconMoveModal.style.display = "block";
@@ -99,28 +101,49 @@ fetch(urlWorks)
             figureModal.addEventListener("mouseout", () => {
                 iconMoveModal.style.display = "none";
             });
-
-            // Figcaption
             const captionModal = document.createElement("figcaption");
             const linkCaptionModal = document.createElement("a");
             linkCaptionModal.setAttribute("href", "#");
             linkCaptionModal.textContent = "éditer";
-            document.querySelector("#empty-gallery-msg").style.display = "none";
-
-            // AppendChilds
             figureModal.appendChild(imageModal);
-            figureModal.appendChild(iconDeleteModal);
+            figureModal.appendChild(deleteBtn);
+            deleteBtn.appendChild(iconDeleteModal);
             figureModal.appendChild(iconMoveModal);
             captionModal.appendChild(linkCaptionModal);
             figureModal.appendChild(captionModal);
-
             figuresContainer.appendChild(figureModal);
+            // Ajoute un événement de clic sur l'icône de suppression pour chaque projet
+            deleteBtn.addEventListener("click", async () => {
+                try {
+                    const response = await fetch(`${urlWorks}/${project.id}`, {
+                        method: "DELETE",
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    if (response.ok) {
+                        alert("Projet supprimé avec succès.");
+                        // supprime la figure correspondant au projet de la modal
+                        figureModal.style.display = "none";
+                        // supprime la figure correspondant au projet sur la page d'accueil
+                        const figure = document.querySelector(`#figure_${project.id}`);
+                        if (figure) {
+                            figure.remove();
+                        }
+                    } else {
+                        alert("La suppression du projet a échoué.");
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            });
         }
-    })
+    } catch (error) {
+        console.error(error);
+    }
+}
 
+displayProjects();
 
-
-// Modale 2
+// Modale 2 - Ajout tarvaux
 const imagePreview = document.getElementById("imagePreview");
 imagePreview.style.display = "none";
 

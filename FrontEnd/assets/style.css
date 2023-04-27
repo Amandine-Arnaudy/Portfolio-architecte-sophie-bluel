@@ -855,3 +855,7 @@ a {
 	border-radius: 60px;
 	cursor: pointer;
 }
+
+.active {
+	background: #1D6154;;
+}
