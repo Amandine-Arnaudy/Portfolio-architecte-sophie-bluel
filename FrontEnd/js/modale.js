@@ -58,7 +58,7 @@ arrowModal.addEventListener('click', function () {
 const urlWorks = "http://localhost:5678/api/works";
 const token = sessionStorage.getItem("token");
 
-// Fonction pour afficher les projets dans la modal
+// Fonction pour afficher les projets dans la modale
 async function displayProjects() {
     try {
         const response = await fetch(urlWorks);
@@ -89,29 +89,34 @@ async function displayProjects() {
             deleteBtn.classList.add("delete-btn");
             const iconDeleteModal = document.createElement("i");
             iconDeleteModal.classList.add("fa-solid", "fa-trash-can");
+            const moveBtn = document.createElement("div");
+            moveBtn.classList.add("move-btn");
             const iconMoveModal = document.createElement("i");
-            iconMoveModal.setAttribute(
-                "class",
-                "move-btn fa-solid fa-arrows-up-down-left-right"
-            );
-            iconMoveModal.style.display = "none";
+            iconMoveModal.classList.add("fa-solid", "fa-arrows-up-down-left-right");
+            moveBtn.style.display = "none";
+
+            // Icone move qui s'affiche au passage de la souris 
             figureModal.addEventListener("mouseover", () => {
-                iconMoveModal.style.display = "block";
+                moveBtn.style.display = "block";
             });
             figureModal.addEventListener("mouseout", () => {
-                iconMoveModal.style.display = "none";
+                moveBtn.style.display = "none";
             });
+
             const captionModal = document.createElement("figcaption");
             const linkCaptionModal = document.createElement("a");
             linkCaptionModal.setAttribute("href", "#");
             linkCaptionModal.textContent = "éditer";
             figureModal.appendChild(imageModal);
+
             figureModal.appendChild(deleteBtn);
             deleteBtn.appendChild(iconDeleteModal);
-            figureModal.appendChild(iconMoveModal);
+            figureModal.appendChild(moveBtn);
+            moveBtn.appendChild(iconMoveModal);
             captionModal.appendChild(linkCaptionModal);
             figureModal.appendChild(captionModal);
             figuresContainer.appendChild(figureModal);
+
             // Ajoute un événement de clic sur l'icône de suppression pour chaque projet
             deleteBtn.addEventListener("click", async () => {
                 try {
@@ -120,13 +125,16 @@ async function displayProjects() {
                         headers: { Authorization: `Bearer ${token}` },
                     });
                     if (response.ok) {
-                        alert("Projet supprimé avec succès.");
-                        // supprime la figure correspondant au projet de la modal
-                        figureModal.style.display = "none";
-                        // supprime la figure correspondant au projet sur la page d'accueil
-                        const figure = document.querySelector(`#figure_${project.id}`);
-                        if (figure) {
-                            figure.remove();
+                        // Demande une confirmation avant de supprimer le projet
+                        if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
+                            alert("Projet supprimé avec succès.");
+                            // supprime la figure correspondant au projet de la modale
+                            figureModal.style.display = "none";
+                            // supprime la figure correspondant au projet sur la page d'accueil
+                            const figure = document.querySelector(`#figure_${project.id}`);
+                            if (figure) {
+                                figure.remove();
+                            }
                         }
                     } else {
                         alert("La suppression du projet a échoué.");
@@ -175,3 +183,68 @@ function previewImage(event) {
     }
 }
 
+// Ajout photos
+const btnAddProjet = document.querySelector(".submit_button2");
+btnAddProjet.addEventListener("click", addWork);
+
+const title = document.querySelector("#input-title");
+const category = document.querySelector("#category");
+const image = document.querySelector("#file");
+const submitButton = document.querySelector(".submit_button2");
+
+title.addEventListener("change", checkForm);
+category.addEventListener("change", checkForm);
+image.addEventListener("change", checkForm);
+
+// Met à jour la couleur du bouton Valider
+function checkForm() {
+    if (title.value !== "" && category.value !== "" && image.files[0] !== undefined) {
+        submitButton.style.backgroundColor = "#1D6154";
+    } else {
+        submitButton.style.backgroundColor = "#A7A7A7";
+    }
+}
+
+
+async function addWork(event) {
+    event.preventDefault();
+
+    // Vérifie les champs pour être sûr qu'ils sont tous remplis
+    if (title.value === "" || category.value === "" || image.files[0] === undefined) {
+        alert("Veuillez remplir tous les champs pour continuer.");
+        return;
+    }
+
+    try {
+        const formData = new FormData();
+        formData.append("title", title.value);
+        formData.append("category", category.value);
+        formData.append("image", image.files[0]);
+
+        const response = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+        });
+
+        // Vérifie la réponse du serveur
+        if (response.status === 201) {
+            alert("Projet ajouté avec succès !");
+            displayProjects();
+            e.preventDefault();
+        } else if (response.status === 400) {
+            alert("Merci de remplir tous les champs");
+        } else if (response.status === 500) {
+            alert("Erreur serveur");
+        } else if (response.status === 401) {
+            alert("Vous n'êtes pas autorisé à ajouter un projet");
+            window.location.href = "login.html";
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+checkForm();

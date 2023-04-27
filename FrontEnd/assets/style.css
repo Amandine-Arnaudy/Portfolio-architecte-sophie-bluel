@@ -473,7 +473,7 @@ input#password {
 	outline: none;
 }
 
-input[type="submit"] {
+#login input[type="submit"] {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -599,6 +599,11 @@ section form a {
 	top: 5%;
 }
 
+.delete-btn svg {
+	font-size: 11px;
+    padding-bottom: 2px;
+}
+
 .move-btn {
 	color: white;
 	background: #000000;
@@ -608,6 +613,11 @@ section form a {
 	position: absolute;
 	left: 39%;
 	top: 5%;
+}
+
+.move-btn svg {
+	font-size: 11px;
+    padding-bottom: 2px;
 }
 
 
@@ -854,8 +864,4 @@ a {
 	background: #A7A7A7;
 	border-radius: 60px;
 	cursor: pointer;
-}
-
-.active {
-	background: #1D6154;;
 }

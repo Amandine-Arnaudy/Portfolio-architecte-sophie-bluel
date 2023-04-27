@@ -101,31 +101,31 @@
 
 							<div id="input_image_container">
 
-								<a href="#modal-add-image"><label for="file"
-											class="add-photo-button">+ Ajouter une
-											photo</label></a>
-									<input type="file" id="file" name="photo" onchange="previewImage(event);">
-								</div>
-							
+								<label for="file" class="add-photo-button">+ Ajouter une
+									photo</label>
+								<input type="file" id="file" name="photo" onchange="previewImage(event);">
+							</div>
+
 							<span id="image_restriction">jpg, png : 4mo max</span>
 						</div>
 
 						<div class="title">
-							<label for="input_title">Titre</label>
-							<input type="text" name="title" id="input-title" required>
+							<label for="input-title">Titre</label>
+							<input type="text" name="title" id="input-title">
 						</div>
 
 						<div class="category">
-							<label for="category1">Catégorie</label>
-							<select name="category" id="category" required>
-								<option value="" disabled selected hidden></option>
+							<label for="category">Catégorie</label>
+							<select name="category" id="category" >
+								<option value="0" disabled selected hidden label="Choisissez une option"> </option>
 								<option value="1">Objets</option>
 								<option value="2">Appartements</option>
 								<option value="3">Hotels & restaurants</option>
 							</select>
 						</div>
 						<hr>
-						<button class="submit_button2" disabled>Valider</button>
+						<input type="submit" class="submit_button2" value="Valider">
+						<!--<button class="submit_button2" disabled>Valider</button-->
 					</form>
 				</div>
 
