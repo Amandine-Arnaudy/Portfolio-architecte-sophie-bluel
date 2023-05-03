@@ -87,6 +87,7 @@ async function displayProjects() {
             imageModal.setAttribute("alt", project.title);
             const deleteBtn = document.createElement("div");
             deleteBtn.classList.add("delete-btn");
+            deleteBtn.setAttribute("data-project-id", project.id);
             const iconDeleteModal = document.createElement("i");
             iconDeleteModal.classList.add("fa-solid", "fa-trash-can");
             const moveBtn = document.createElement("div");
@@ -108,7 +109,6 @@ async function displayProjects() {
             linkCaptionModal.setAttribute("href", "#");
             linkCaptionModal.textContent = "éditer";
             figureModal.appendChild(imageModal);
-
             figureModal.appendChild(deleteBtn);
             deleteBtn.appendChild(iconDeleteModal);
             figureModal.appendChild(moveBtn);
@@ -118,9 +118,10 @@ async function displayProjects() {
             figuresContainer.appendChild(figureModal);
 
             // Ajoute un événement de clic sur l'icône de suppression pour chaque projet
-            deleteBtn.addEventListener("click", async () => {
+            deleteBtn.addEventListener("click", async (event) => {
                 try {
-                    const response = await fetch(`${urlWorks}/${project.id}`, {
+                    const projectId = event.currentTarget.getAttribute("data-project-id");
+                    const response = await fetch(`${urlWorks}/${projectId}`, {
                         method: "DELETE",
                         headers: { Authorization: `Bearer ${token}` },
                     });
@@ -128,12 +129,14 @@ async function displayProjects() {
                         // Demande une confirmation avant de supprimer le projet
                         if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
                             alert("Projet supprimé avec succès.");
+
                             // supprime la figure correspondant au projet de la modale
                             figureModal.style.display = "none";
+                            //modal1.style.display = "none";
                             // supprime la figure correspondant au projet sur la page d'accueil
-                            const figure = document.querySelector(`#figure_${project.id}`);
-                            if (figure) {
-                                figure.remove();
+                            const projectElem = document.querySelector(`#project-${projectId}`);
+                            if (projectElem) {
+                                projectElem.remove();
                             }
                         }
                     } else {
@@ -143,15 +146,43 @@ async function displayProjects() {
                     console.error(error);
                 }
             });
+
+
         }
     } catch (error) {
         console.error(error);
     }
 }
 
+// Supprimer toute la gallerie
+async function deleteAllProjects() {
+    try {
+        const works = await fetch(urlWorks).then(response => response.json());
+        while (works.length > 0) {
+            const projectId = works[0].id;
+            const response = await fetch(`${urlWorks}/${projectId}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            if (response.ok) {
+                works.shift(); // supprime le premier élément de l'array
+                console.log(`Projet ${projectId} supprimé avec succès.`);
+            } else {
+                console.log(`La suppression du projet ${projectId} a échoué.`);
+            }
+        }
+        alert("Tous les projets ont été supprimés avec succès.");
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const deleteGalleryBtn = document.querySelector("#delete_gallery");
+deleteGalleryBtn.addEventListener("click", deleteAllProjects);
+
 displayProjects();
 
-// Modale 2 - Ajout tarvaux
+// Modale 2 - Ajout travaux
 const imagePreview = document.getElementById("imagePreview");
 imagePreview.style.display = "none";
 
@@ -232,8 +263,29 @@ async function addWork(event) {
         // Vérifie la réponse du serveur
         if (response.status === 201) {
             alert("Projet ajouté avec succès !");
-            displayProjects();
-            e.preventDefault();
+
+            // Ferme la modale
+            modal2.style.display = "none";
+
+            // Ajoute le projet dans la galerie
+            const newWork = await response.json();
+            const gallery = document.querySelector(".gallery");
+
+            const workElement = document.createElement("figure");
+            workElement.classList.add("work");
+            const imageSrc = URL.createObjectURL(image.files[0]);
+            workElement.innerHTML = `
+                <figure>
+                    <img src="${imageSrc}" alt="${newWork.title}" />
+                    <figcaption>${newWork.title}</figcaption>
+                </figure>`;
+            gallery.appendChild(workElement);
+
+            // Ajoute la nouvelle photo dans la modale
+            const imagePreview = document.getElementById("imagePreview");
+            imagePreview.src = imageSrc;
+            imagePreview.style.display = "block";
+
         } else if (response.status === 400) {
             alert("Merci de remplir tous les champs");
         } else if (response.status === 500) {
