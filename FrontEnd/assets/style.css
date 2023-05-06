@@ -605,6 +605,14 @@ section form a {
 }
 
 .move-btn {
+	display: none;
+}
+
+figure:hover .move-btn {
+	display: block;
+}
+
+.move-btn {
 	color: white;
 	background: #000000;
 	border-radius: 2px;

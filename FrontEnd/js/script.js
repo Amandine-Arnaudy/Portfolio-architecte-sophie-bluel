@@ -106,12 +106,12 @@ function showCategories(event) {
     }
 }
 
-// Génère les catégories
+// Génère les projets
 function generateGallery(works) {
     const gallery = document.querySelector('.gallery');
     gallery.innerHTML = '';
     for (let projet of works) {
-        gallery.innerHTML += `<figure>
+        gallery.innerHTML += `<figure class="figureworks">
 		 				<img src="${projet.imageUrl}" alt="${projet.title}">
 		 				<figcaption>${projet.title}</figcaption>`;
     }
